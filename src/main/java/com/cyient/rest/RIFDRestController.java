@@ -267,8 +267,8 @@ public class RIFDRestController {
 	{
 		JSONObject status = new JSONObject();
 	    byte[] bytes = file.getBytes();
+		return file.toString();
 
-			return file.toString();
 		
 		
 	}
