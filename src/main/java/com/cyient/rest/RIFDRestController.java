@@ -24,6 +24,7 @@ import com.cyient.dao.RFIDDAO;
 import com.cyient.exceptions.CustomException;
 import com.cyient.model.Customer;
 import com.cyient.model.Design;
+import com.cyient.model.ExecutiveTicketInfo;
 import com.cyient.model.Inventory;
 import com.cyient.model.Ticketing;
 import com.cyient.model.User;
@@ -91,7 +92,7 @@ public class RIFDRestController {
 	public String getTickets_based_on_Executive_header(@RequestHeader("Executive-Id") String Executive_Id,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid)
 	{
 		if(rfidDAO.Authentication(companyid, secretkey)==true)
-		{
+		{					
 		return gson.toJson(rfidDAO.getTickets_based_on_Executive(Executive_Id));
 		}
 		else
@@ -170,7 +171,7 @@ public class RIFDRestController {
 	}
 	
 	@GetMapping(path="/Authenticate",produces = "application/json")
-	public String getAuthenticate(@RequestHeader("username") String username,@RequestHeader("password") String password,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid)
+	public String getAuthenticate(@RequestHeader("username") String username,@RequestHeader("password") String password,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid) throws ParseException
 	{
 		if(rfidDAO.Authentication(companyid, secretkey)==true)
 		{
@@ -187,6 +188,26 @@ public class RIFDRestController {
 			}
 			else
 			{
+				
+				/*List<ExecutiveTicketInfo> list_demo =  rfidDAO.getTickets_based_on_Executive(username);
+				System.out.println(username+"Kiran");
+
+				System.out.println(list_demo.get(0).getTicketType());
+				JSONParser parser = new JSONParser(); 
+				JSONArray json = (JSONArray) parser.parse(gson.toJson(rfidDAO.getTickets_based_on_Executive(username)));
+				System.out.println(json.get(0));
+				JSONObject jobj = new JSONObject(list_demo.get(0).getCustomerId());
+				jobj.put("ticketType", list_demo.get(0).getTicketType());
+				System.out.println(jobj+" customer object");
+				JSONObject objofobj = new JSONObject(json.get(0));
+				objofobj.remove("customerId");
+				System.out.println(objofobj);
+				objofobj.append("customerId", jobj);
+				System.out.println("after"+objofobj);*/
+
+				
+				
+				
 				return gson.toJson(rfidDAO.getTickets_based_on_Executive(username));
 				//return Success.toString();
 			}
@@ -240,14 +261,14 @@ public class RIFDRestController {
 	
 	
 	@PostMapping(path = "/update_design", consumes = "application/json", produces = "application/json")
-	public String update_design(@RequestBody Design design,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid) throws ParseException
+	public String update_design(@RequestBody Design design,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid,@RequestHeader("customer-id") String customerid) throws ParseException
 	{
 		JSONObject status = new JSONObject();
 		//code
 		
 		if(rfidDAO.Authentication(companyid, secretkey)==true)
 		{
-			if(rfidDAO.update_design(design)==true)	
+			if(rfidDAO.update_design(design,customerid)==true)	
 			status.put("status","Design Data updated successfully");
 			return status.toString();
 		}
@@ -260,14 +281,14 @@ public class RIFDRestController {
 	
 	
 	@PostMapping(path = "/update_inventory", consumes = "application/json", produces = "application/json")
-	public String update_inventory(@RequestBody Inventory inventory,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid) throws ParseException
+	public String update_inventory(@RequestBody Inventory inventory,@RequestHeader("secret-key") String secretkey,@RequestHeader("customer-id") String customerid,@RequestHeader("company-id") String companyid) throws ParseException
 	{
 		JSONObject status = new JSONObject();
 		//code
 		
 		if(rfidDAO.Authentication(companyid, secretkey)==true)
 		{
-			if(rfidDAO.update_inventory(inventory)==true)	
+			if(rfidDAO.update_inventory(inventory,customerid)==true)	
 			status.put("status","Inventory Data updated successfully");
 			return status.toString();
 		}
@@ -323,9 +344,11 @@ public class RIFDRestController {
 	
 	
 	@GetMapping("/test_header")
-	public String headertest(@RequestHeader("secret-key") String language) 
+	public String headertest() 
 	{
-		return language;
+		List<ExecutiveTicketInfo> temp = rfidDAO.getTickets_based_on_Executive("EXEC009");
+		
+		return temp.toString();
 	}
 	
 	

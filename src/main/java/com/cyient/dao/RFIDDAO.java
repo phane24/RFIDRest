@@ -99,9 +99,9 @@ public interface RFIDDAO {
 	public Boolean update_customer(Customer customer);
 
 	@Transactional
-	public Boolean update_design(Design design);
+	public Boolean update_design(Design design,String customerid);
 	
 	@Transactional
-	public Boolean update_inventory(Inventory inventory);
+	public Boolean update_inventory(Inventory inventory,String customerid);
 
 }
