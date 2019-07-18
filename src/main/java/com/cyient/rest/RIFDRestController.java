@@ -277,6 +277,8 @@ public class RIFDRestController {
 		JSONObject status = new JSONObject();
 		
 	    byte[] bytes = file.getBytes();
+	    
+	    status.put("status", "File uploaded");
 		return file.toString();
 
 		
