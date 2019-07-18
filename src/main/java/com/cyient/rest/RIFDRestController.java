@@ -169,7 +169,38 @@ public class RIFDRestController {
 		}
 	}
 	
+	@GetMapping(path="/Authenticate",produces = "application/json")
+	public String getAuthenticate(@RequestHeader("username") String username,@RequestHeader("password") String password,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid)
+	{
+		if(rfidDAO.Authentication(companyid, secretkey)==true)
+		{
+			List<User> Authenticate_Data = rfidDAO.getAuthenticate_FE(username,password);
+			JSONObject Success = new JSONObject();
+			JSONObject failure = new JSONObject();
+			
+			Success.put("status","Valid Credentials");
+			failure.put("status","Invalid Credentials");
 
+			if(Authenticate_Data.size()==0)
+			{
+				return failure.toString();
+			}
+			else
+			{
+				return gson.toJson(rfidDAO.getTickets_based_on_Executive(username));
+				//return Success.toString();
+			}
+		}
+		else
+		{
+			JSONObject obj = new JSONObject();
+			obj.put("status", "Authentication Error");
+			return obj.toString();
+		}
+	}
+	
+	
+	
 	
 	@PostMapping(path = "/add_customer", consumes = "application/json", produces = "application/json")
 	public String addMember(@RequestBody Customer customer,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid) throws ParseException
