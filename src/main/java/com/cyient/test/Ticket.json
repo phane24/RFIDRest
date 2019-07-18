@@ -1,0 +1,35 @@
+[
+    {
+        "ticketNum": "TKT-PL-104",
+        "customerId": {
+            "customerId": "RF-104",
+            "exchangeName": "PL-127",
+            "customerName": "Lenna Paprocki",
+            "phoneNum": 6529241389,
+            "city": "Abbeywood",
+            "postalCode": "4613",
+            "address": "639 Main St",
+            "customerStatus": "",
+            "userId": "",
+            "employeeName": "",
+            "surname": "",
+            "givenName": "",
+            "fax": "",
+            "email": "lpaprocki@hotmail.com",
+            "classification": "",
+            "partial": "",
+            "reportingCategory": "",
+            "defaultItemStatus": "",
+            "intialScreen": ""
+        },
+        "customerName": "Lenna Paprocki",
+        "exchangeName": "PL-127",
+        "ticketDescription": "Issue with data connection and call drop",
+        "openDate": "Mar 6, 2019",
+        "openTime": "02:44:58 AM",
+        "closedDate": "Mar 6, 2019",
+        "closedTime": "02:44:58 AM",
+        "status": "OPEN",
+        "severity": "Minor"
+    }
+]
