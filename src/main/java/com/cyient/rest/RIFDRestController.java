@@ -248,24 +248,34 @@ public class RIFDRestController {
 	
 	
 	
-	@PostMapping(path = "/update_ticket", consumes = "application/json", produces = "application/json")
-	public JSONArray update_ticket(@RequestBody JSONArray data,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid) throws ParseException
+/*	@PostMapping(path = "/update_ticket", consumes = "application/json", produces = "application/json")
+	public String update_ticket(@RequestBody JSONArray data,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid) throws ParseException
 	{
 		JSONObject status = new JSONObject();
 		//code
-		
+
+		if(rfidDAO.Authentication(companyid, secretkey)==true)
+		{
+			
+		}
+		else
+		{
+			return Error.toString();
+
+		}
 	
 			//if(rfidDAO.update_inventory(inventory)==true)	
 			//status.put("status","Inventory Data updated successfully");			
 			return data;
 		
 		
-	}
+	}*/
 	
-	@PostMapping(path = "/blob_test", consumes = { "multipart/form-data" })
-	public String file(@RequestParam("file") MultipartFile file) throws ParseException, IOException
+	@PostMapping(path = "/upload_image", consumes = { "multipart/form-data" })
+	public String file(@RequestParam("image") MultipartFile file,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid,@RequestHeader("customer-id") String customerid,@RequestHeader("ticket-id") String ticketid) throws ParseException, IOException
 	{
 		JSONObject status = new JSONObject();
+		
 	    byte[] bytes = file.getBytes();
 		return file.toString();
 
