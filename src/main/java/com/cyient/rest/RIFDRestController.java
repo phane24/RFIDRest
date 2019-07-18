@@ -279,7 +279,7 @@ public class RIFDRestController {
 	    byte[] bytes = file.getBytes();
 	    
 	    status.put("status", "File uploaded");
-		return file.toString();
+		return status.toString();
 
 		
 		
