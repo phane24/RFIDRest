@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cyient.model.Customer;
 import com.cyient.model.Design;
@@ -103,5 +104,10 @@ public interface RFIDDAO {
 	
 	@Transactional
 	public Boolean update_inventory(Inventory inventory,String customerid);
+	
+	@Transactional
+	public Boolean upload_file(MultipartFile file,String ticketid);
+
+	
 
 }

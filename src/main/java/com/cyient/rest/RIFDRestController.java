@@ -324,13 +324,27 @@ public class RIFDRestController {
 	}*/
 	
 	@PostMapping(path = "/upload_image", consumes = { "multipart/form-data" })
-	public String file(@RequestParam("image") MultipartFile file,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid,@RequestHeader("customer-id") String customerid,@RequestHeader("ticket-id") String ticketid) throws ParseException, IOException
+	public String upload_file(@RequestParam("image") MultipartFile file,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid,@RequestHeader("ticket-id") String ticketid) throws ParseException, IOException
 	{
 		JSONObject status = new JSONObject();
+		if(rfidDAO.Authentication(companyid, secretkey)==true)
+		{
+			if( rfidDAO.upload_file(file,ticketid)==true)
+			{
+			    status.put("status", "File uploaded");
+			}
+			else
+			{
+				status.put("status", "Image not updated");
+			}
+		}
+		else
+		{
+			return Error.toString();
+		}
 		
-	    byte[] bytes = file.getBytes();
 	    
-	    status.put("status", "File uploaded");
+	   
 		return status.toString();
 
 		

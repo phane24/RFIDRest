@@ -1,5 +1,6 @@
 package com.cyient.dao;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -15,6 +16,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cyient.model.Customer;
 import com.cyient.model.Design;
@@ -22,6 +26,7 @@ import com.cyient.model.Exchange;
 import com.cyient.model.Executive;
 import com.cyient.model.ExecutiveTicketInfo;
 import com.cyient.model.Headers_keys;
+import com.cyient.model.ImageWarpper;
 import com.cyient.model.Inventory;
 import com.cyient.model.Ticketing;
 import com.cyient.model.User;
@@ -265,7 +270,7 @@ public class RFIDDAOImpl implements RFIDDAO {
 			Criteria c = sessionFactory.getCurrentSession().createCriteria(Customer.class);
 			c.add(Restrictions.eq("customerId",customer.getCustomerId()));
 			Customer object = (Customer)c.list().get(0);
-			
+
 			object.setAddress(customer.getAddress());
 			object.setCity(customer.getCity());
 			object.setCustomerId(customer.getCustomerId());
@@ -277,7 +282,7 @@ public class RFIDDAOImpl implements RFIDDAO {
 			object.setPostalCode(customer.getPostalCode());
 			object.setSurname(customer.getSurname());
 			object.setUserId(customer.getUserId());
-			
+
 			sessionFactory.getCurrentSession().update(object);
 			return true;
 		}
@@ -295,8 +300,8 @@ public class RFIDDAOImpl implements RFIDDAO {
 			Customer object = new Customer();
 			object.setCustomerId(customerid);
 			c.add(Restrictions.eq("customerId",object));
-			
-			
+
+
 			Design Desgine_updated = (Design)c.list().get(0);
 			Desgine_updated.setExchangeName(design.getExchangeName());
 			Desgine_updated.setShelfName(design.getShelfName());
@@ -307,9 +312,9 @@ public class RFIDDAOImpl implements RFIDDAO {
 			Desgine_updated.setFloor(design.getFloor());
 			Desgine_updated.setSuite(design.getSuite());
 			Desgine_updated.setVertIn(design.getVertIn());
-			
-			
-			
+
+
+
 			sessionFactory.getCurrentSession().update(Desgine_updated);
 			return true;
 		}
@@ -354,6 +359,29 @@ public class RFIDDAOImpl implements RFIDDAO {
 	}
 
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)	
+	public Boolean upload_file(MultipartFile file,String ticketid)
+	{
+		try {
+			byte[] bytes = file.getBytes();
+
+			ImageWarpper imageWarpper =  new ImageWarpper();
+			imageWarpper.setTicketid(ticketid);
+			imageWarpper.setImageName(ticketid+".jpeg");
+			imageWarpper.setData(bytes);
+			sessionFactory.getCurrentSession().saveOrUpdate(imageWarpper);
+			return true;
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+
+			e.printStackTrace();
+			return false;
+
+		}
+
+
+	}
 
 
 
