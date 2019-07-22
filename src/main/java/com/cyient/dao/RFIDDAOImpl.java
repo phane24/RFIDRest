@@ -199,7 +199,7 @@ public class RFIDDAOImpl implements RFIDDAO {
 	{
 		Criteria c = sessionFactory.getCurrentSession().createCriteria(ExecutiveTicketInfo.class);
 		c.add(Restrictions.eq("executiveId",Executive_id));
-		c.add(Restrictions.eq("status","OPEN"));
+		c.add(Restrictions.eq("status","InProgress"));
 
 		ArrayList<String> Ticket_ID = new ArrayList<String>();
 		//mylist.add(mystring);
