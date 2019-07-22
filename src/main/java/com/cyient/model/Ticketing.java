@@ -27,8 +27,6 @@ public class Ticketing implements Serializable {
 	@Column(name="Ticket_Type")
 	private String ticketType;	
 	
-	
-
 	@Column(name="Customer_Name")
 	private String customerName;
 	

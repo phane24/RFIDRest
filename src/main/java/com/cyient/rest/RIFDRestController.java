@@ -353,10 +353,6 @@ public class RIFDRestController {
 	
 	
 	
-	
-	
-	
-	
 	@GetMapping("/test_header")
 	public String headertest() 
 	{
