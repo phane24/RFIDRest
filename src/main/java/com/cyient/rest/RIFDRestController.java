@@ -24,7 +24,6 @@ import com.cyient.dao.RFIDDAO;
 import com.cyient.exceptions.CustomException;
 import com.cyient.model.Customer;
 import com.cyient.model.Design;
-import com.cyient.model.Device_Assigned_to_Technician;
 import com.cyient.model.ExecutiveTicketInfo;
 import com.cyient.model.Inventory;
 import com.cyient.model.Ticketing;
