@@ -381,6 +381,10 @@ public class RFIDDAOImpl implements RFIDDAO {
 		try {
 			byte[] bytes = file.getBytes();
 
+			if(bytes.length==0)
+			{
+				return false;
+			}
 			ImageWarpper imageWarpper =  new ImageWarpper();
 			imageWarpper.setTicketid(ticketid);
 			imageWarpper.setImageName(ticketid+".jpeg");
