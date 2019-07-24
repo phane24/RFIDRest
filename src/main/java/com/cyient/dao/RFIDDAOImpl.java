@@ -22,7 +22,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.cyient.model.Customer;
 import com.cyient.model.Design;
-import com.cyient.model.Device_Assigned_to_Technician;
 import com.cyient.model.Exchange;
 import com.cyient.model.Executive;
 import com.cyient.model.ExecutiveTicketInfo;
@@ -196,7 +195,7 @@ public class RFIDDAOImpl implements RFIDDAO {
 		}
 	}
 	
-	public Boolean Device_Authentication(String macid,String technicanid)
+/*	public Boolean Device_Authentication(String macid,String technicanid)
 	{
 		Criteria c = sessionFactory.getCurrentSession().createCriteria(Device_Assigned_to_Technician.class);
 		c.add(Restrictions.eq("MAC_ID",macid));
@@ -210,7 +209,7 @@ public class RFIDDAOImpl implements RFIDDAO {
 			return true;
 		}
 	}
-
+*/
 
 	public List<ExecutiveTicketInfo>getTickets_based_on_Executive(String Executive_id)
 	{

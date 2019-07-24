@@ -108,8 +108,8 @@ public interface RFIDDAO {
 	@Transactional
 	public Boolean upload_file(MultipartFile file,String ticketid);
 
-	@Transactional
-	public Boolean Device_Authentication(String macid,String technicanid);
+	//@Transactional
+	//public Boolean Device_Authentication(String macid,String technicanid);
 
 	@Transactional
 	public Boolean update_ticket(String ticketid);
