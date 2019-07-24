@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.cyient.model.Customer;
 import com.cyient.model.Design;
+import com.cyient.model.Device_Assigned_to_Technician;
 import com.cyient.model.Exchange;
 import com.cyient.model.Executive;
 import com.cyient.model.ExecutiveTicketInfo;
@@ -185,6 +186,22 @@ public class RFIDDAOImpl implements RFIDDAO {
 		c.add(Restrictions.eq("secret_key",secretkey));
 		c.add(Restrictions.eq("company_id",companyid));
 		List<Headers_keys>dummy = c.list();
+		
+		if(dummy.size()==0)
+		{
+			return false;
+		}else
+		{
+			return true;
+		}
+	}
+	
+	public Boolean Device_Authentication(String macid,String technicanid)
+	{
+		Criteria c = sessionFactory.getCurrentSession().createCriteria(Device_Assigned_to_Technician.class);
+		c.add(Restrictions.eq("MAC_ID",macid));
+		c.add(Restrictions.eq("Executive_Id",technicanid));
+		List<Device_Assigned_to_Technician>dummy = c.list();		
 		if(dummy.size()==0)
 		{
 			return false;
@@ -380,6 +397,31 @@ public class RFIDDAOImpl implements RFIDDAO {
 
 		}
 
+
+	}
+	
+	public Boolean update_ticket(String ticketid) {
+		try{
+
+			Criteria c = sessionFactory.getCurrentSession().createCriteria(ExecutiveTicketInfo.class);
+			c.add(Restrictions.eq("ticketNum",ticketid));
+			ExecutiveTicketInfo executiveTicketInfo = (ExecutiveTicketInfo)c.list().get(0);
+			executiveTicketInfo.setStatus("Closed");
+
+			sessionFactory.getCurrentSession().update(executiveTicketInfo);
+			
+			Criteria c_ticketing = sessionFactory.getCurrentSession().createCriteria(Ticketing.class);
+			c_ticketing.add(Restrictions.eq("ticketNum",ticketid));
+			Ticketing ticketing = (Ticketing)c_ticketing.list().get(0);
+			ticketing.setStatus("Closed");
+
+			return true;
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			return false;
+
+		}
 
 	}
 

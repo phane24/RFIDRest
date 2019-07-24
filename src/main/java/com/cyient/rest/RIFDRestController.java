@@ -24,6 +24,7 @@ import com.cyient.dao.RFIDDAO;
 import com.cyient.exceptions.CustomException;
 import com.cyient.model.Customer;
 import com.cyient.model.Design;
+import com.cyient.model.Device_Assigned_to_Technician;
 import com.cyient.model.ExecutiveTicketInfo;
 import com.cyient.model.Inventory;
 import com.cyient.model.Ticketing;
@@ -176,6 +177,8 @@ public class RIFDRestController {
 		if(rfidDAO.Authentication(companyid, secretkey)==true)
 		{
 			List<User> Authenticate_Data = rfidDAO.getAuthenticate_FE(username,password);
+			//List<Device_Assigned_to_Technician> Authenticate_Device = rfidDAO.getAuthenticate_FE(username,password);
+			
 			JSONObject Success = new JSONObject();
 			JSONObject failure = new JSONObject();
 			
@@ -188,6 +191,7 @@ public class RIFDRestController {
 			}
 			else
 			{
+				
 				
 				/*List<ExecutiveTicketInfo> list_demo =  rfidDAO.getTickets_based_on_Executive(username);
 				System.out.println(username+"Kiran");
@@ -297,8 +301,25 @@ public class RIFDRestController {
 			return Error.toString();
 		}
 	}
-	
-	
+
+	@GetMapping(path = "/update_ticket", produces = "application/json")
+	public String update_ticket(@RequestHeader("ticket-id") String ticketid) throws ParseException
+	{
+		JSONObject status = new JSONObject();
+		
+		if(rfidDAO.update_ticket(ticketid)==true)
+		{
+			status.put("status", "Ticket Closed");
+		}
+		else
+		{
+			status.put("status", "Ticket Not Closed");
+		}
+
+		return status.toString();
+		
+
+	}
 	
 /*	@PostMapping(path = "/update_ticket", consumes = "application/json", produces = "application/json")
 	public String update_ticket(@RequestBody JSONArray data,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid) throws ParseException
