@@ -70,6 +70,17 @@ public class Customer implements Serializable {
 
 	@Column(name="Initial_Screen")
 	private String intialScreen;
+	
+	@Column(name="Region")
+	private String region;
+	
+	public String getRegion() {
+		return region;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
+	}
 
 	public String getCustomerId() {
 		return customerId;

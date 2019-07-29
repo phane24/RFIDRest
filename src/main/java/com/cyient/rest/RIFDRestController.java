@@ -102,7 +102,7 @@ public class RIFDRestController {
 	}
 	
 	@GetMapping(path="/getInventory",produces = "application/json")
-	public String getInventory(@RequestHeader("customer-id") String customerid,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid)
+	public String getInventory(@RequestHeader("customer-id") String customerid,@RequestHeader("region") String region,@RequestHeader("city") String city,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid)
 	{
 		if(rfidDAO.Authentication(companyid, secretkey)==true)
 		{
@@ -116,7 +116,7 @@ public class RIFDRestController {
 	
 	
 	@GetMapping(path="/getDesign",produces = "application/json")
-	public String getDesign(@RequestHeader("customer-id") String customerid,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid)
+	public String getDesign(@RequestHeader("customer-id") String customerid,@RequestHeader("region") String region,@RequestHeader("city") String city,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid)
 	{
 		if(rfidDAO.Authentication(companyid, secretkey)==true)
 		{
@@ -129,7 +129,7 @@ public class RIFDRestController {
 	}
 	
 	@GetMapping(path="/getCustomer",produces = "application/json")
-	public String getCustomer(@RequestHeader("customer-id") String customerid,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid)
+	public String getCustomer(@RequestHeader("customer-id") String customerid,@RequestHeader("region") String region,@RequestHeader("city") String city,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid)
 	{
 		if(rfidDAO.Authentication(companyid, secretkey)==true)
 		{
@@ -244,7 +244,7 @@ public class RIFDRestController {
 
 	
 	@PostMapping(path = "/update_customer", consumes = "application/json", produces = "application/json")
-	public String update_customer(@RequestBody Customer customer,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid) throws ParseException
+	public String update_customer(@RequestBody Customer customer,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid,@RequestHeader("region") String region,@RequestHeader("city") String city) throws ParseException
 	{
 		JSONObject status = new JSONObject();
 		//code
@@ -264,7 +264,7 @@ public class RIFDRestController {
 	
 	
 	@PostMapping(path = "/update_design", consumes = "application/json", produces = "application/json")
-	public String update_design(@RequestBody Design design,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid,@RequestHeader("customer-id") String customerid) throws ParseException
+	public String update_design(@RequestBody Design design,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid,@RequestHeader("customer-id") String customerid,@RequestHeader("region") String region,@RequestHeader("city") String city) throws ParseException
 	{
 		JSONObject status = new JSONObject();
 		//code
@@ -284,7 +284,7 @@ public class RIFDRestController {
 	
 	
 	@PostMapping(path = "/update_inventory", consumes = "application/json", produces = "application/json")
-	public String update_inventory(@RequestBody Inventory inventory,@RequestHeader("secret-key") String secretkey,@RequestHeader("customer-id") String customerid,@RequestHeader("company-id") String companyid) throws ParseException
+	public String update_inventory(@RequestBody Inventory inventory,@RequestHeader("secret-key") String secretkey,@RequestHeader("customer-id") String customerid,@RequestHeader("company-id") String companyid,@RequestHeader("region") String region,@RequestHeader("city") String city) throws ParseException
 	{
 		JSONObject status = new JSONObject();
 		//code

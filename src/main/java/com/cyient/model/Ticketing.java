@@ -30,8 +30,27 @@ public class Ticketing implements Serializable {
 	@Column(name="Customer_Name")
 	private String customerName;
 	
+	@Column(name="Region")
+	private String region;
+	
+	@Column(name="City")
+	private String city;
+	
 	@Column(name="Exchange_Name")
 	private String exchangeName;
+	
+	@Column(name="Floor")
+	private String floor;	
+	
+	@Column(name="Suite")
+	private String suite;
+	
+	@Column(name="Rack")
+	private String rack;
+	
+	@Column(name="Sub_RAck")
+	private String subrack;
+
 	
 	@Column(name="Ticket_Description")
 	private String ticketDescription;
@@ -160,5 +179,53 @@ public class Ticketing implements Serializable {
 		 public void setCustomer(Customer customer) {
 		  this.customer = customer;
 		 }
+
+		public String getCity() {
+			return city;
+		}
+
+		public void setCity(String city) {
+			this.city = city;
+		}
+
+		public String getRegion() {
+			return region;
+		}
+
+		public void setRegion(String region) {
+			this.region = region;
+		}
+
+		public String getFloor() {
+			return floor;
+		}
+
+		public void setFloor(String floor) {
+			this.floor = floor;
+		}
+
+		public String getSuite() {
+			return suite;
+		}
+
+		public void setSuite(String suite) {
+			this.suite = suite;
+		}
+
+		public String getRack() {
+			return rack;
+		}
+
+		public void setRack(String rack) {
+			this.rack = rack;
+		}
+
+		public String getSubrack() {
+			return subrack;
+		}
+
+		public void setSubrack(String subrack) {
+			this.subrack = subrack;
+		}
 
 }

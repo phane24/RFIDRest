@@ -21,6 +21,9 @@ public class User implements Serializable {
 	@Column(name="Username")
 	private String username;
 	
+	@Column(name="Name")
+	private String name;
+	
 	@Column(name="Email_Id")
 	private String emailId;
 	
@@ -30,12 +33,27 @@ public class User implements Serializable {
 	@Column(name="Password")
 	private String password;
 		
-	@Column(name="type")
+	@Column(name="Type")
 	private String type;
+	
+	@Column(name="Region")
+	private String region;
+	
+	@Column(name="City")
+	private String city;
 	
 	@Column(name="Created_Date")
 	@Temporal(TemporalType.DATE)
 	private Date createdDate;
+
+	
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
 
 	public Date getCreatedDate() {
 		return createdDate;
@@ -51,6 +69,14 @@ public class User implements Serializable {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getEmailId() {
@@ -83,6 +109,14 @@ public class User implements Serializable {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getRegion() {
+		return region;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
 	}
 
 }

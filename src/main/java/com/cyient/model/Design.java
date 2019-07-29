@@ -1,6 +1,7 @@
 package com.cyient.model;
 
 import java.io.Serializable;
+import java.sql.Blob;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -80,12 +81,39 @@ public class Design implements Serializable {
 	@Column(name="Rack")
 	private String rack;
 	
-	@Column(name="Sub_Rack")
+	@Column(name="Sub_RAck")
 	private String subrack;
 
 	@Column(name="Card")
 	private String card;	
 	
+	@Column(name="Image")
+	private Blob image;
+	
+	@Column(name="Region")
+	private String region;	
+	
+	@Column(name="City")
+	private String city;
+	
+	
+	
+	public String getRegion() {
+		return region;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
 	public int getTagId() {
 		return tagId;
 	}
@@ -268,5 +296,15 @@ public class Design implements Serializable {
 
 	public void setCard(String card) {
 		this.card = card;
-	}		
+	}
+
+	public Blob getImage() {
+		return image;
+	}
+
+	public void setImage(Blob image) {
+		this.image = image;
+	}	
+	
+	
 }

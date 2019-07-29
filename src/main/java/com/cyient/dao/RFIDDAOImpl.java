@@ -246,6 +246,8 @@ public class RFIDDAOImpl implements RFIDDAO {
 		Customer object = new Customer();
 		object.setCustomerId(customer_id);
 		c.add(Restrictions.eq("customerId",object));
+		//c.add(Restrictions.eq("region",region));
+		//c.add(Restrictions.eq("city",city));
 
 		return (List<Inventory>)c.list();
 
@@ -257,6 +259,8 @@ public class RFIDDAOImpl implements RFIDDAO {
 		Customer object = new Customer();
 		object.setCustomerId(customer_id);
 		c.add(Restrictions.eq("customerId",object));
+		//c.add(Restrictions.eq("region",region));
+		//c.add(Restrictions.eq("city",city));
 
 		return (List<Design>)c.list();
 	}
@@ -265,6 +269,9 @@ public class RFIDDAOImpl implements RFIDDAO {
 	{
 		Criteria c = sessionFactory.getCurrentSession().createCriteria(Customer.class);
 		c.add(Restrictions.eq("customerId",customer_id));
+		//c.add(Restrictions.eq("region",region));
+		//c.add(Restrictions.eq("city",city));
+		
 		return (List<Customer>)c.list();
 	}
 

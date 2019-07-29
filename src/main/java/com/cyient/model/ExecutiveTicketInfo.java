@@ -17,13 +17,22 @@ public class ExecutiveTicketInfo implements Serializable {
 
 	private static final long serialVersionUID = -3465813074586302847L;
 
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	@ManyToOne
     @JoinColumn(name = "Customer_Id")
-	private Customer customerId;
+	private Customer customer;
 
 	@Column(name="Executive_Id")
 	private String executiveId;
@@ -48,13 +57,31 @@ public class ExecutiveTicketInfo implements Serializable {
 	
 	@Column(name="Unique_Id")
 	private String uniqueId;
+	
+	@Column(name="Region")
+	private String region;
+	
+	@Column(name="Manager")
+	private String manager;
+	
+	@Column(name="City")
+	private String city;
 
-	public Customer getCustomerId() {
-		return customerId;
+	
+	public String getCity() {
+		return city;
 	}
 
-	public void setCustomerId(Customer customerId) {
-		this.customerId = customerId;
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 	public String getExecutiveId() {
@@ -119,6 +146,22 @@ public class ExecutiveTicketInfo implements Serializable {
 
 	public void setUniqueId(String uniqueId) {
 		this.uniqueId = uniqueId;
+	}
+
+	public String getRegion() {
+		return region;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
+	}
+
+	public String getManager() {
+		return manager;
+	}
+
+	public void setManager(String manager) {
+		this.manager = manager;
 	}	
 	
 }
