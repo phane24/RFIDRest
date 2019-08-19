@@ -382,7 +382,7 @@ public class RIFDRestController {
 	}
 	
 	@PostMapping(path = "/upload_data")
-	public JSONArray upload_data(@RequestParam("data") JSONArray object) 
+	public JSONArray upload_data(@RequestBody JSONArray object) 
 	{
 		
 		System.out.println(object);
