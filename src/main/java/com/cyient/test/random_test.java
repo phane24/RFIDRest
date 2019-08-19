@@ -75,13 +75,36 @@ public class random_test {
 		fllor[1]="2nd";
 		fllor[2]="3rd";
 		fllor[3]="4th"; 
+		fllor[4]="5th";
+		fllor[5]="6th";
+		fllor[6]="7th";
+		fllor[7]="8th";		
 		
+		String[]  racks=new String[10];
+		racks[0]="R1";
+		racks[1]="R2";
+		racks[2]="R3";
+		racks[3]="R4"; 
+			
 		
-        for(int i=0;i<501;i++)
+        for(int i=0;i<50;i++)
         {
-            int rand_int2 = rand.nextInt(3); 
-        	System.out.println(fllor[rand_int2]);
+            int rand_int2 = rand.nextInt(7); 
+            
+        	System.out.println(racks[getRandomNumberInRange(0,3)]);
         }
+        
+        
+        
+	}
+	private static int getRandomNumberInRange(int min, int max) {
+
+		if (min >= max) {
+			throw new IllegalArgumentException("max must be greater than min");
+		}
+
+		Random r = new Random();
+		return r.nextInt((max - min) + 1) + min;
 	}
 
 }
