@@ -435,14 +435,7 @@ public class RIFDRestController {
 		return temp.toString();
 	}
 
-	@PostMapping(path = "/upload_data",consumes = "application/json")
-	public JSONArray upload_data(@RequestBody JSONArray object) 
-	{
 
-		System.out.println(object);
-		return object;
-
-	}
 
 
 }
