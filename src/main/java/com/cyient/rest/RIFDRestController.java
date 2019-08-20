@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.jboss.logging.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
@@ -28,6 +30,7 @@ import com.cyient.model.ExecutiveTicketInfo;
 import com.cyient.model.Inventory;
 import com.cyient.model.Ticketing;
 import com.cyient.model.User;
+import com.cyient.model.sensor_data;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
@@ -314,9 +317,6 @@ public class RIFDRestController {
 
 
 
-
-
-
 		if(rfidDAO.Authentication(companyid, secretkey)==true)
 		{
 			if(rfidDAO.update_design(design,customerid)==true)	
@@ -435,7 +435,13 @@ public class RIFDRestController {
 		return temp.toString();
 	}
 
-
+	@PostMapping(path="/update_data",consumes = "application/json")
+	public String update_data(@Valid @RequestBody List <sensor_data> stuffs) {
+		//Rest_Response response = new Rest_Response();		
+		System.out.println("RasbiData");
+		System.out.println(gson.toJson(stuffs));
+        return "Done"; 
+	}
 
 
 }
