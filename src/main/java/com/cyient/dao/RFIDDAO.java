@@ -117,6 +117,9 @@ public interface RFIDDAO {
 	public Boolean insert_taginformation(Taginformation tag_data);
 
 	@Transactional
-	public Boolean delete_and_insert_taginformation();
+	public Boolean delete_and_insert_taginformation(String customerid);
 
+	@Transactional
+	public List<Taginformation> get_taginformation(String customerid);
+	
 }

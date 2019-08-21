@@ -447,7 +447,7 @@ public class RFIDDAOImpl implements RFIDDAO {
 
 	}
 
-	public Boolean delete_and_insert_taginformation(Taginformation Tag_data,String customerid) {
+	public Boolean delete_and_insert_taginformation(String customerid) {
 		try{
 			Criteria c = sessionFactory.getCurrentSession().createCriteria(Taginformation.class);
 			c.add(Restrictions.eq("customerid",customerid));
@@ -455,8 +455,7 @@ public class RFIDDAOImpl implements RFIDDAO {
 			final ObjectMapper mapper = new ObjectMapper(); // jackson's objectmapper
 			final Taginformation_history old_data_backup = mapper.convertValue(oldtag_data.get(0),Taginformation_history.class);			
 			sessionFactory.getCurrentSession().save(old_data_backup);			
-			sessionFactory.getCurrentSession().delete(mapper.convertValue(oldtag_data.get(0),Taginformation.class));
-			
+			sessionFactory.getCurrentSession().delete(mapper.convertValue(oldtag_data.get(0),Taginformation.class));			
 			return true;
 		}
 		catch (Exception e) {
@@ -466,7 +465,18 @@ public class RFIDDAOImpl implements RFIDDAO {
 
 	}
 
-
+	public List<Taginformation> get_taginformation(String customerid) {
+		Criteria c = sessionFactory.getCurrentSession().createCriteria(Taginformation.class);
+		try{
+			c.add(Restrictions.eq("customerid",customerid));					
+			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return c.list();
+	}
 
 	public Boolean delete_and_insert_taginformation() {
 		// TODO Auto-generated method stub

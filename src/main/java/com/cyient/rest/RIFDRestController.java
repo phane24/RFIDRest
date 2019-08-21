@@ -280,8 +280,8 @@ public class RIFDRestController {
 
 				final Design desgine = mapper.convertValue(stuffs.get(1), Design.class);		
 				System.out.println(rfidDAO.update_design(desgine, customerid));
-
-				final Inventory inventory = mapper.convertValue(stuffs.get(2), Inventory.class);		
+				System.out.println(stuffs.get(2));
+				final Inventory inventory = mapper.convertValue(stuffs.get(2), Inventory.class);					
 				System.out.println(rfidDAO.update_inventory(inventory,customerid));
 				status.put("status","Data updated successfully");
 				
@@ -301,10 +301,20 @@ public class RIFDRestController {
 				}
 				else
 				{
-					rfidDAO.delete_and_insert_taginformation();
-				}
-				
-				
+					List<Taginformation> old_unqid = rfidDAO.get_taginformation(customerid);
+					rfidDAO.delete_and_insert_taginformation(customerid);
+					Tag_data.setCustomerid(customer.getCustomerId());
+					//Tag_data.setFiledata(filedata);
+					//Tag_data.setFileName(fileName);
+					Tag_data.setStartpoint(desgine.getStartPoint());
+					Tag_data.setTaguniqueid(desgine.getStartPoint()+"-"+desgine.getEndPoint()+"-"+desgine.getRack()+customerid);
+					Tag_data.setTicketid(ticketid);
+					Tag_data.setCusjon(gson.toJson(customer));
+					Tag_data.setDesJson(gson.toJson(desgine));
+					Tag_data.setInvjson(gson.toJson(inventory));
+					Tag_data.setPre_uniq(old_unqid.get(0).getTaguniqueid());
+					rfidDAO.insert_taginformation(Tag_data);
+				}							
 			}
 			catch(Exception e)
 			{
@@ -456,11 +466,11 @@ public class RIFDRestController {
 		return temp.toString();
 	}
 
-	@PostMapping(path="/update_data",consumes = "application/json")
+	/*@PostMapping(path="/update_data",consumes = "application/json")
 	public String update_data(@Valid @RequestBody List <sensor_data> stuffs) {
 		//Rest_Response response = new Rest_Response();		
 		System.out.println("RasbiData");
 		System.out.println(gson.toJson(stuffs));
         return "Done"; 
-	}
+	}*/
 }
