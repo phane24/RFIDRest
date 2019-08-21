@@ -6,8 +6,6 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,11 +20,7 @@ public class Executive implements Serializable {
 	@Id
 	@Column(name="Executive_Id")
 	private String executiveId;
-	
-	@ManyToOne
-	@JoinColumn(name="Customer_Id")
-	private Customer customerId;	
-	
+		
 	@Column(name="Email_Id")
 	private String emailId;
 	
@@ -67,14 +61,6 @@ public class Executive implements Serializable {
 
 	public void setExecutiveId(String executiveId) {
 		this.executiveId = executiveId;
-	}
-
-	public Customer getCustomerId() {
-		return customerId;
-	}
-
-	public void setCustomerId(Customer customerId) {
-		this.customerId = customerId;
 	}
 
 	public String getEmailId() {

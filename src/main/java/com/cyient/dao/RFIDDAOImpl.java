@@ -22,14 +22,16 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.cyient.model.Customer;
 import com.cyient.model.Design;
-import com.cyient.model.Exchange;
 import com.cyient.model.Executive;
 import com.cyient.model.ExecutiveTicketInfo;
 import com.cyient.model.Headers_keys;
 import com.cyient.model.ImageWarpper;
 import com.cyient.model.Inventory;
+import com.cyient.model.Taginformation;
+import com.cyient.model.Taginformation_history;
 import com.cyient.model.Ticketing;
 import com.cyient.model.User;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 
@@ -54,9 +56,7 @@ public class RFIDDAOImpl implements RFIDDAO {
 	} 
 
 
-	public void addExchange(Exchange exchange) {
-		sessionFactory.getCurrentSession().saveOrUpdate(exchange);
-	}
+
 
 
 	public void addExecutive(Executive executive) {
@@ -435,7 +435,41 @@ public class RFIDDAOImpl implements RFIDDAO {
 
 	}
 
+	public Boolean insert_taginformation(Taginformation Tag_data) {
+		try{
+			sessionFactory.getCurrentSession().save(Tag_data);
+			return true;
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			return false;
+		}
+
+	}
+
+	public Boolean delete_and_insert_taginformation(Taginformation Tag_data,String customerid) {
+		try{
+			Criteria c = sessionFactory.getCurrentSession().createCriteria(Taginformation.class);
+			c.add(Restrictions.eq("customerid",customerid));
+			List<Object> oldtag_data = c.list();			
+			final ObjectMapper mapper = new ObjectMapper(); // jackson's objectmapper
+			final Taginformation_history old_data_backup = mapper.convertValue(oldtag_data.get(0),Taginformation_history.class);			
+			sessionFactory.getCurrentSession().save(old_data_backup);			
+			sessionFactory.getCurrentSession().delete(mapper.convertValue(oldtag_data.get(0),Taginformation.class));
+			
+			return true;
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			return false;
+		}
+
+	}
 
 
 
+	public Boolean delete_and_insert_taginformation() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -13,7 +13,7 @@ public class Customer implements Serializable {
 
 	private static final long serialVersionUID = -3465813074586302847L;
 
-	@Id
+	@Id	
 	@Column(name="Customer_Id")
 	private String customerId;
 
@@ -81,6 +81,7 @@ public class Customer implements Serializable {
 	public void setRegion(String region) {
 		this.region = region;
 	}
+
 
 	public String getCustomerId() {
 		return customerId;

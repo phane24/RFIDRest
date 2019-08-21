@@ -11,10 +11,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.cyient.model.Customer;
 import com.cyient.model.Design;
-import com.cyient.model.Exchange;
 import com.cyient.model.Executive;
 import com.cyient.model.ExecutiveTicketInfo;
 import com.cyient.model.Inventory;
+import com.cyient.model.Taginformation;
 import com.cyient.model.Ticketing;
 import com.cyient.model.User;
 
@@ -26,8 +26,7 @@ public interface RFIDDAO {
 	@Transactional
 	public User getAllUsersOnCriteria(String username,String password);
 	
-	@Transactional
-	public void addExchange(Exchange exchange);
+
 	
 	@Transactional
 	public void addExecutive(Executive executive);
@@ -113,5 +112,11 @@ public interface RFIDDAO {
 
 	@Transactional
 	public Boolean update_ticket(String ticketid);
+
+	@Transactional
+	public Boolean insert_taginformation(Taginformation tag_data);
+
+	@Transactional
+	public Boolean delete_and_insert_taginformation();
 
 }

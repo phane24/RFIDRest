@@ -28,6 +28,7 @@ import com.cyient.model.Customer;
 import com.cyient.model.Design;
 import com.cyient.model.ExecutiveTicketInfo;
 import com.cyient.model.Inventory;
+import com.cyient.model.Taginformation;
 import com.cyient.model.Ticketing;
 import com.cyient.model.User;
 import com.cyient.model.sensor_data;
@@ -267,23 +268,43 @@ public class RIFDRestController {
 	}
 
 	@PostMapping(path = "/update_data", consumes = "application/json", produces = "application/json")
-	public String update_customer_header(@RequestBody List <Object> stuffs,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid,@RequestHeader("customer-id") String customerid,@RequestHeader("region") String region,@RequestHeader("city") String city) throws ParseException
+	public String update_customer_header(@RequestBody List <Object> stuffs,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid,@RequestHeader("customer-id") String customerid,@RequestHeader("region") String region,@RequestHeader("city") String city,@RequestHeader("ticket-id") String ticketid,@RequestHeader("ticket_type") String ticket_type) throws ParseException
 	{
 		JSONObject status = new JSONObject();
 		if(rfidDAO.Authentication(companyid, secretkey)==true)
 		{
 			try{
 				final ObjectMapper mapper = new ObjectMapper(); // jackson's objectmapper
-				final Customer pojo = mapper.convertValue(stuffs.get(0), Customer.class);
-				System.out.println(rfidDAO.update_customer(pojo));
+				final Customer customer = mapper.convertValue(stuffs.get(0), Customer.class);
+				System.out.println(rfidDAO.update_customer(customer));
 
 				final Design desgine = mapper.convertValue(stuffs.get(1), Design.class);		
 				System.out.println(rfidDAO.update_design(desgine, customerid));
 
 				final Inventory inventory = mapper.convertValue(stuffs.get(2), Inventory.class);		
 				System.out.println(rfidDAO.update_inventory(inventory,customerid));
-
 				status.put("status","Data updated successfully");
+				
+				Taginformation Tag_data = new Taginformation();
+				if(ticket_type.equals("New"))
+				{
+					Tag_data.setCustomerid(customer.getCustomerId());
+					//Tag_data.setFiledata(filedata);
+					//Tag_data.setFileName(fileName);
+					Tag_data.setStartpoint(desgine.getStartPoint());
+					Tag_data.setTaguniqueid(desgine.getStartPoint()+"-"+desgine.getEndPoint()+"-"+desgine.getRack()+customerid);
+					Tag_data.setTicketid(ticketid);
+					Tag_data.setCusjon(gson.toJson(customer));
+					Tag_data.setDesJson(gson.toJson(desgine));
+					Tag_data.setInvjson(gson.toJson(inventory));
+					rfidDAO.insert_taginformation(Tag_data);
+				}
+				else
+				{
+					rfidDAO.delete_and_insert_taginformation();
+				}
+				
+				
 			}
 			catch(Exception e)
 			{
@@ -303,7 +324,7 @@ public class RIFDRestController {
 	{
 		JSONObject status = new JSONObject();
 		//code
-		List<Design> old_object=rfidDAO.getDesign(customerid);
+		/*List<Design> old_object=rfidDAO.getDesign(customerid);
 		String NewUnq_ID = "";
 		String Old_ID = "";
 		if(old_object.get(0).getStartPoint().equals(design.getStartPoint()) & old_object.get(0).getEndPoint().equals(design.getEndPoint()) & old_object.get(0).getRack().equals(design.getRack()))
@@ -315,7 +336,7 @@ public class RIFDRestController {
 			NewUnq_ID= old_object.get(0).getStartPoint()+"-"+old_object.get(0).getEndPoint()+"-"+old_object.get(0).getRack()+design.getCustomerId();
 		}
 
-
+*/
 
 		if(rfidDAO.Authentication(companyid, secretkey)==true)
 		{
@@ -442,6 +463,4 @@ public class RIFDRestController {
 		System.out.println(gson.toJson(stuffs));
         return "Done"; 
 	}
-
-
 }
