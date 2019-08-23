@@ -100,7 +100,9 @@ public class RIFDRestController {
 	{
 		if(rfidDAO.Authentication(companyid, secretkey)==true)
 		{					
-			return gson.toJson(rfidDAO.getTickets_based_on_Executive(Executive_Id));
+			ExecutiveTicketInfo object = rfidDAO.getTickets_based_on_Executive(Executive_Id).get(0);
+			object.setCustomerID(object.getCustomer().getCustomerId());
+			return gson.toJson(object);
 		}
 		else
 		{
