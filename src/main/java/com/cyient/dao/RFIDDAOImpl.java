@@ -410,20 +410,20 @@ public class RFIDDAOImpl implements RFIDDAO {
 
 	}
 	
-	public Boolean update_ticket(String ticketid) {
+	public Boolean update_ticket(String ticketid,String status) {
 		try{
 
 			Criteria c = sessionFactory.getCurrentSession().createCriteria(ExecutiveTicketInfo.class);
 			c.add(Restrictions.eq("ticketNum",ticketid));
 			ExecutiveTicketInfo executiveTicketInfo = (ExecutiveTicketInfo)c.list().get(0);
-			executiveTicketInfo.setStatus("Closed");
+			executiveTicketInfo.setStatus(status);
 
 			sessionFactory.getCurrentSession().update(executiveTicketInfo);
 			
 			Criteria c_ticketing = sessionFactory.getCurrentSession().createCriteria(Ticketing.class);
 			c_ticketing.add(Restrictions.eq("ticketNum",ticketid));
 			Ticketing ticketing = (Ticketing)c_ticketing.list().get(0);
-			ticketing.setStatus("Closed");
+			ticketing.setStatus(status);
 
 			return true;
 		}

@@ -385,7 +385,7 @@ public class RIFDRestController {
 	{
 		JSONObject status = new JSONObject();
 
-		if(rfidDAO.update_ticket(ticketid)==true)
+		if(rfidDAO.update_ticket(ticketid,"Closed")==true)
 		{
 			status.put("status", "Ticket Closed");
 		}
@@ -395,8 +395,24 @@ public class RIFDRestController {
 		}
 
 		return status.toString();
+	}
+	
+	
+	@GetMapping(path = "/reject_ticket", produces = "application/json")
+	public String reject_ticket(@RequestHeader("ticket-id") String ticketid) throws ParseException
+	{
+		JSONObject status = new JSONObject();
 
+		if(rfidDAO.update_ticket(ticketid,"Not Accepted")==true)
+		{
+			status.put("status", "Ticket Not Accepted");
+		}
+		else
+		{
+			status.put("status", "Sorry Contact your Admin");
+		}
 
+		return status.toString();
 	}
 
 	/*	@PostMapping(path = "/update_ticket", consumes = "application/json", produces = "application/json")
@@ -435,7 +451,6 @@ public class RIFDRestController {
 					System.out.println(file);
 					status.put("status", "File uploaded");
 				}
-
 				else
 				{
 					status.put("status", "Image not updated");
@@ -451,9 +466,6 @@ public class RIFDRestController {
 			status.put("status", "Image not updated");
 		}
 		return status.toString();
-
-
-
 	}
 
 
