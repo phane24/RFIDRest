@@ -217,8 +217,9 @@ public class RIFDRestController {
 
 
 
-
-				return gson.toJson(rfidDAO.getTickets_based_on_Executive(username));
+				ExecutiveTicketInfo object = rfidDAO.getTickets_based_on_Executive(username).get(0);
+				object.setCustomerID(object.getCustomer().getCustomerId());
+				return gson.toJson(object);
 				//return Success.toString();
 			}
 		}
