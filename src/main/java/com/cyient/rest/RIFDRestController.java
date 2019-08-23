@@ -398,14 +398,14 @@ public class RIFDRestController {
 	}
 	
 	
-	@GetMapping(path = "/reject_ticket", produces = "application/json")
-	public String reject_ticket(@RequestHeader("ticket-id") String ticketid) throws ParseException
+	@GetMapping(path = "/ticket_status", produces = "application/json")
+	public String reject_ticket(@RequestHeader("ticket-id") String ticketid,@RequestHeader("status") String status_msg) throws ParseException
 	{
 		JSONObject status = new JSONObject();
 
-		if(rfidDAO.update_ticket(ticketid,"Not Accepted")==true)
+		if(rfidDAO.update_ticket(ticketid,status_msg)==true)
 		{
-			status.put("status", "Ticket Not Accepted");
+			status.put("status", "Ticket status updated");
 		}
 		else
 		{
