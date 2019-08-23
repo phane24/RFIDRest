@@ -438,8 +438,8 @@ public class RIFDRestController {
 
 	}*/
 
-	@PostMapping(path = "/upload_image", consumes = { "multipart/form-data" },produces = "application/json")
-	public String upload_file(@RequestParam("image") byte[] file,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid,@RequestHeader("ticket-id") String ticketid) throws ParseException, IOException
+	@PostMapping(path = "/upload_image", produces = "application/json")
+	public String upload_file(@RequestBody byte[] file,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid,@RequestHeader("ticket-id") String ticketid) throws ParseException, IOException
 	{
 		JSONObject status = new JSONObject();
 		try{
