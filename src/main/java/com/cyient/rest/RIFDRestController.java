@@ -109,7 +109,6 @@ public class RIFDRestController {
 			return Error.toString();
 		}
 	}
-
 	@GetMapping(path="/getInventory",produces = "application/json")
 	public String getInventory(@RequestHeader("customer-id") String customerid,@RequestHeader("region") String region,@RequestHeader("city") String city,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid)
 	{
