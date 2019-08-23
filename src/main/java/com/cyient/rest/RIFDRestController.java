@@ -284,6 +284,9 @@ public class RIFDRestController {
 				System.out.println(stuffs.get(2));
 				final Inventory inventory = mapper.convertValue(stuffs.get(2), Inventory.class);					
 				System.out.println(rfidDAO.update_inventory(inventory,customerid));
+				final ImageWarpper image = mapper.convertValue(stuffs.get(3), ImageWarpper.class);
+				
+				
 				status.put("status","Data updated successfully");
 				
 				Taginformation Tag_data = new Taginformation();
@@ -305,8 +308,8 @@ public class RIFDRestController {
 					List<Taginformation> old_unqid = rfidDAO.get_taginformation(customerid);
 					rfidDAO.delete_and_insert_taginformation(customerid);
 					Tag_data.setCustomerid(customer.getCustomerId());
-					//Tag_data.setFiledata(filedata);
-					//Tag_data.setFileName(fileName);
+					Tag_data.setFiledata(image.getData());
+					Tag_data.setFileName(ticketid+".jpeg");
 					Tag_data.setStartpoint(desgine.getStartPoint());
 					Tag_data.setTaguniqueid(desgine.getStartPoint()+"-"+desgine.getEndPoint()+"-"+desgine.getRack()+customerid);
 					Tag_data.setTicketid(ticketid);
@@ -330,6 +333,90 @@ public class RIFDRestController {
 	}
 
 
+	
+	@PostMapping(path = "/new_update_data", consumes = "application/json", produces = "application/json")
+	public String new_update_data(@RequestBody List <Object> stuffs,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid,@RequestHeader("customer-id") String customerid,@RequestHeader("region") String region,@RequestHeader("city") String city,@RequestHeader("ticket-id") String ticketid,@RequestHeader("ticket_type") String ticket_type) throws ParseException
+	{
+		JSONObject status = new JSONObject();
+		if(rfidDAO.Authentication(companyid, secretkey)==true)
+		{
+			try{
+				
+				final ObjectMapper mapper = new ObjectMapper(); // jackson's objectmapper
+				final Customer customer = mapper.convertValue(stuffs.get(0), Customer.class);
+				System.out.println(rfidDAO.update_customer(customer));
+
+				final Design desgine = mapper.convertValue(stuffs.get(1), Design.class);		
+				System.out.println(rfidDAO.update_design(desgine, customerid));
+				System.out.println(stuffs.get(2));
+				final Inventory inventory = mapper.convertValue(stuffs.get(2), Inventory.class);					
+				System.out.println(rfidDAO.update_inventory(inventory,customerid));
+				final ImageWarpper image = mapper.convertValue(stuffs.get(3), ImageWarpper.class);
+				
+				
+				/*
+				//final ObjectMapper mapper = new ObjectMapper(); // jackson's objectmapper
+				final Customer customer = rfidDAO.getCustomer(customerid).get(0);
+				//System.out.println(rfidDAO.update_customer(customer));
+
+				final Design desgine =  rfidDAO.getDesign(customerid).get(0);		
+				//System.out.println(rfidDAO.update_design(desgine, customerid));
+				//System.out.println(stuffs.get(2));
+				final Inventory inventory = rfidDAO.getInventory(customerid).get(0);	
+				//System.out.println(rfidDAO.update_inventory(inventory,customerid));
+				//status.put("status","Data updated successfully");
+				*/
+				
+				
+				
+				
+				
+				
+				
+				Taginformation Tag_data = new Taginformation();
+				if(ticket_type.equals("New"))
+				{
+					Tag_data.setCustomerid(customer.getCustomerId());
+					Tag_data.setFiledata(image.getData());
+					Tag_data.setFileName(ticketid+".jpeg");
+					Tag_data.setStartpoint(desgine.getStartPoint());
+					Tag_data.setTaguniqueid(desgine.getStartPoint()+"-"+desgine.getEndPoint()+"-"+desgine.getRack()+customerid);
+					Tag_data.setTicketid(ticketid);
+					Tag_data.setCusjon(gson.toJson(customer));
+					Tag_data.setDesJson(gson.toJson(desgine));
+					Tag_data.setInvjson(gson.toJson(inventory));
+					rfidDAO.insert_taginformation(Tag_data);
+				}
+							
+			}
+			catch(Exception e)
+			{
+				status.put("status","Failed to update ");
+			}
+		}
+		else
+		{
+			return Error.toString();
+		}		
+		return status.toString();
+	}	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@PostMapping(path = "/update_design", consumes = "application/json", produces = "application/json")
 	public String update_design(@RequestBody Design design,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid,@RequestHeader("customer-id") String customerid,@RequestHeader("region") String region,@RequestHeader("city") String city) throws ParseException
 	{
