@@ -105,7 +105,7 @@ public interface RFIDDAO {
 	public Boolean update_inventory(Inventory inventory,String customerid);
 	
 	@Transactional
-	public Boolean upload_file(MultipartFile file,String ticketid);
+	public Boolean upload_file(byte[] file,String ticketid);
 
 	//@Transactional
 	//public Boolean Device_Authentication(String macid,String technicanid);

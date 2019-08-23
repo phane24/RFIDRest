@@ -381,9 +381,9 @@ public class RFIDDAOImpl implements RFIDDAO {
 
 	}
 
-
+/*
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)	
-	public Boolean upload_file(MultipartFile file,String ticketid)
+	public Boolean upload_file(byte[] file,String ticketid)
 	{
 		try {
 			byte[] bytes = file.getBytes();
@@ -407,8 +407,40 @@ public class RFIDDAOImpl implements RFIDDAO {
 
 		}
 
+	
 
 	}
+	
+	*/
+	
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)	
+	public Boolean upload_file(byte[] file,String ticketid)
+	{
+		try {
+
+			if(file.length==0)
+			{
+				return false;
+			}
+			ImageWarpper imageWarpper =  new ImageWarpper();
+			imageWarpper.setTicketid(ticketid);
+			imageWarpper.setImageName(ticketid+".jpeg");
+			imageWarpper.setData(file);
+			sessionFactory.getCurrentSession().saveOrUpdate(imageWarpper);
+			return true;
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+
+			e.printStackTrace();
+			return false;
+
+		}
+
+	
+
+	}
+	
 	
 	public Boolean update_ticket(String ticketid,String status) {
 		try{
