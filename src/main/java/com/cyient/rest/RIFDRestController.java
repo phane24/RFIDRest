@@ -27,6 +27,7 @@ import com.cyient.exceptions.CustomException;
 import com.cyient.model.Customer;
 import com.cyient.model.Design;
 import com.cyient.model.ExecutiveTicketInfo;
+import com.cyient.model.ImageWarpper;
 import com.cyient.model.Inventory;
 import com.cyient.model.Taginformation;
 import com.cyient.model.Ticketing;
@@ -439,14 +440,14 @@ public class RIFDRestController {
 	}*/
 
 	@PostMapping(path = "/upload_image", produces = "application/json")
-	public String upload_file(@RequestBody byte[] file,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid,@RequestHeader("ticket-id") String ticketid) throws ParseException, IOException
+	public String upload_file(@RequestBody ImageWarpper file,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid,@RequestHeader("ticket-id") String ticketid) throws ParseException, IOException
 	{
 		JSONObject status = new JSONObject();
 		try{
 			if(rfidDAO.Authentication(companyid, secretkey)==true)
 			{
 
-				if( rfidDAO.upload_file(file,ticketid)==true)
+				if( rfidDAO.upload_file(file.getData(),ticketid)==true)
 				{
 					System.out.println(file);
 					status.put("status", "File uploaded");
