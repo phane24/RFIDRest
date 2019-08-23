@@ -68,7 +68,6 @@ public class ExecutiveTicketInfo implements Serializable {
 	private String city;
 
 	private String customerID;
-
 	public String getCustomerID() {
 		return customerID;
 	}
