@@ -282,8 +282,7 @@ public class RIFDRestController {
 				final Inventory inventory = mapper.convertValue(stuffs.get(2), Inventory.class);					
 				System.out.println(rfidDAO.update_inventory(inventory,customerid));
 				final ImageWarpper image = mapper.convertValue(stuffs.get(3), ImageWarpper.class);
-				
-				
+						
 				status.put("status","Data updated successfully");
 				
 				Taginformation Tag_data = new Taginformation();
@@ -501,7 +500,7 @@ public class RIFDRestController {
 	}
 	
 	@GetMapping(path = "/ticket_comments", produces = "application/json")
-	public String ticket_comments(@RequestHeader("ticket-id") String ticketid,@RequestHeader("status") String status_msg,@RequestHeader("Executive-Id") String Executive_Id) throws ParseException
+	public String ticket_comments(@RequestHeader("ticket-id") String ticketid,@RequestHeader("comments") String status_msg,@RequestHeader("Executive-Id") String Executive_Id) throws ParseException
 	{
 		JSONObject status = new JSONObject();
 
