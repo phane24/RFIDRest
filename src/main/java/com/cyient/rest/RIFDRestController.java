@@ -398,7 +398,20 @@ public class RIFDRestController {
 	}	
 	
 	
-	
+	@GetMapping(path="/getData",produces = "application/json")
+	public String getData(@RequestHeader("customer-id") String customerid)
+	{
+	JSONArray finalObject = new JSONArray();
+	List<Object> modelData = new ArrayList<Object>();
+
+
+	modelData.add(rfidDAO.getCustomer(customerid).get(0));
+	modelData.add(rfidDAO.getDesign(customerid).get(0));
+	modelData.add(rfidDAO.getInventory(customerid).get(0));
+
+			return gson.toJson(modelData);
+		
+	}
 	
 	
 	
