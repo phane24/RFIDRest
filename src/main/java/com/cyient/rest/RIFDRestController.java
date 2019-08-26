@@ -266,11 +266,10 @@ public class RIFDRestController {
 	}
 
 	@PostMapping(path = "/update_data", consumes = "application/json", produces = "application/json")
-	public String update_customer_header(@RequestBody List <Object> stuffs,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid,@RequestHeader("customer-id") String customerid,@RequestHeader("region") String region,@RequestHeader("city") String city,@RequestHeader("ticket-id") String ticketid,@RequestHeader("ticket_type") String ticket_type) throws ParseException
+	public String update_customer_header(@RequestBody List <Object> stuffs,@RequestHeader("customer-id") String customerid,@RequestHeader("ticket-id") String ticketid,@RequestHeader("ticket_type") String ticket_type) throws ParseException
 	{
 		JSONObject status = new JSONObject();
-		if(rfidDAO.Authentication(companyid, secretkey)==true)
-		{
+
 			try{
 				final ObjectMapper mapper = new ObjectMapper(); // jackson's objectmapper
 				final Customer customer = mapper.convertValue(stuffs.get(0), Customer.class);
@@ -320,22 +319,18 @@ public class RIFDRestController {
 			{
 				status.put("status","Failed to update ");
 			}
-		}
-		else
-		{
-			return Error.toString();
-		}		
+	
+	
 		return status.toString();
 	}
 
 
 	
 	@PostMapping(path = "/new_update_data", consumes = "application/json", produces = "application/json")
-	public String new_update_data(@RequestBody List <Object> stuffs,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid,@RequestHeader("customer-id") String customerid,@RequestHeader("region") String region,@RequestHeader("city") String city,@RequestHeader("ticket-id") String ticketid,@RequestHeader("ticket_type") String ticket_type) throws ParseException
+	public String new_update_data(@RequestBody List <Object> stuffs,@RequestHeader("customer-id") String customerid,@RequestHeader("ticket-id") String ticketid,@RequestHeader("ticket_type") String ticket_type) throws ParseException
 	{
 		JSONObject status = new JSONObject();
-		if(rfidDAO.Authentication(companyid, secretkey)==true)
-		{
+
 			try{
 				
 				final ObjectMapper mapper = new ObjectMapper(); // jackson's objectmapper
@@ -389,11 +384,8 @@ public class RIFDRestController {
 			{
 				status.put("status","Failed to update ");
 			}
-		}
-		else
-		{
-			return Error.toString();
-		}		
+		
+	
 		return status.toString();
 	}	
 	
