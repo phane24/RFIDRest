@@ -442,11 +442,12 @@ public class RFIDDAOImpl implements RFIDDAO {
 	}
 	
 	
-	public Boolean update_ticket(String ticketid,String status) {
+	public Boolean update_ticket(String ticketid,String status,String ExecutiveId) {
 		try{
 
 			Criteria c = sessionFactory.getCurrentSession().createCriteria(ExecutiveTicketInfo.class);
 			c.add(Restrictions.eq("ticketNum",ticketid));
+			c.add(Restrictions.eq("executiveId",ExecutiveId));
 			ExecutiveTicketInfo executiveTicketInfo = (ExecutiveTicketInfo)c.list().get(0);
 			executiveTicketInfo.setStatus(status);
 
@@ -454,8 +455,37 @@ public class RFIDDAOImpl implements RFIDDAO {
 			
 			Criteria c_ticketing = sessionFactory.getCurrentSession().createCriteria(Ticketing.class);
 			c_ticketing.add(Restrictions.eq("ticketNum",ticketid));
+			c.add(Restrictions.eq("executiveId",ExecutiveId));
 			Ticketing ticketing = (Ticketing)c_ticketing.list().get(0);
 			ticketing.setStatus(status);
+
+			return true;
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			return false;
+
+		}
+
+	}
+	
+	
+	public Boolean update_comment(String ticketid,String status,String ExecutiveId) {
+		try{
+
+			Criteria c = sessionFactory.getCurrentSession().createCriteria(ExecutiveTicketInfo.class);
+			c.add(Restrictions.eq("ticketNum",ticketid));
+			c.add(Restrictions.eq("executiveId",ExecutiveId));
+			ExecutiveTicketInfo executiveTicketInfo = (ExecutiveTicketInfo)c.list().get(0);
+			executiveTicketInfo.setComments(status);
+
+			sessionFactory.getCurrentSession().update(executiveTicketInfo);
+			
+			Criteria c_ticketing = sessionFactory.getCurrentSession().createCriteria(Ticketing.class);
+			c_ticketing.add(Restrictions.eq("ticketNum",ticketid));
+			c.add(Restrictions.eq("executiveId",ExecutiveId));
+			Ticketing ticketing = (Ticketing)c_ticketing.list().get(0);
+			ticketing.setComments(status);
 
 			return true;
 		}

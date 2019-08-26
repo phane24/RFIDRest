@@ -75,6 +75,9 @@ public class Ticketing implements Serializable {
 	@Column(name="Unique_Id")
 	private String uniqueId;
 	
+	@Column(name="Comments")
+	private String comments;
+	
 	@OneToOne
     @JoinColumn(name = "Customer_Id")
 	private Customer customer;
@@ -221,6 +224,14 @@ public class Ticketing implements Serializable {
 
 		public void setSubrack(String subrack) {
 			this.subrack = subrack;
+		}
+
+		public String getComments() {
+			return comments;
+		}
+
+		public void setComments(String comments) {
+			this.comments = comments;
 		}
 
 }

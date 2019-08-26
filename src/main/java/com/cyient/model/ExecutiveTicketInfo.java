@@ -66,16 +66,11 @@ public class ExecutiveTicketInfo implements Serializable {
 	
 	@Column(name="City")
 	private String city;
+	
+	@Column(name="Comments")
+	private String comments;
 
-	private String customerID;
-	public String getCustomerID() {
-		return customerID;
-	}
-
-	public void setCustomerID(String customerID) {
-		this.customerID = customerID;
-	}
-
+	
 	public String getCity() {
 		return city;
 	}
@@ -170,6 +165,14 @@ public class ExecutiveTicketInfo implements Serializable {
 
 	public void setManager(String manager) {
 		this.manager = manager;
+	}
+
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
 	}	
 	
 }
