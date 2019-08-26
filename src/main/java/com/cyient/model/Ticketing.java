@@ -79,7 +79,17 @@ public class Ticketing implements Serializable {
     @JoinColumn(name = "Customer_Id")
 	private Customer customer;
 	
+	@Column(name="Comments")
+	private String comments;
 	
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+
 	public String getTicketNum() {
 		return ticketNum;
 	}

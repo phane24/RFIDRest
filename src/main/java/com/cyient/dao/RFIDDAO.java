@@ -111,7 +111,7 @@ public interface RFIDDAO {
 	//public Boolean Device_Authentication(String macid,String technicanid);
 
 	@Transactional
-	public Boolean update_ticket(String ticketid,String status);
+	public Boolean update_ticket(String ticketid,String status,String ExecutiveId);
 
 	@Transactional
 	public Boolean insert_taginformation(Taginformation tag_data);
@@ -121,5 +121,8 @@ public interface RFIDDAO {
 
 	@Transactional
 	public List<Taginformation> get_taginformation(String customerid);
+
+	@Transactional
+	public Boolean update_ticket_comments(String ticketid, String comments,String ExecutiveId);
 	
 }

@@ -67,6 +67,17 @@ public class ExecutiveTicketInfo implements Serializable {
 	@Column(name="City")
 	private String city;
 
+	@Column(name="Comments")
+	private String comments;
+	
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+
 	private String customerID;
 	public String getCustomerID() {
 		return customerID;

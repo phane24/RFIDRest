@@ -100,9 +100,9 @@ public class RIFDRestController {
 	{
 		if(rfidDAO.Authentication(companyid, secretkey)==true)
 		{					
-			ExecutiveTicketInfo object = rfidDAO.getTickets_based_on_Executive(Executive_Id).get(0);
-			object.setCustomerID(object.getCustomer().getCustomerId());
-			return gson.toJson(object);
+			//ExecutiveTicketInfo object = rfidDAO.getTickets_based_on_Executive(Executive_Id).get(0);
+			//object.setCustomerID(object.getCustomer().getCustomerId());
+			return gson.toJson(rfidDAO.getTickets_based_on_Executive(Executive_Id));
 		}
 		else
 		{
@@ -217,10 +217,7 @@ public class RIFDRestController {
 				System.out.println("after"+objofobj);*/
 
 
-
-				ExecutiveTicketInfo object = rfidDAO.getTickets_based_on_Executive(username).get(0);
-				object.setCustomerID(object.getCustomer().getCustomerId());
-				return gson.toJson(object);
+				return gson.toJson(rfidDAO.getTickets_based_on_Executive(username));
 				//return Success.toString();
 			}
 		}
@@ -369,12 +366,6 @@ public class RIFDRestController {
 				//status.put("status","Data updated successfully");
 				*/
 				
-				
-				
-				
-				
-				
-				
 				Taginformation Tag_data = new Taginformation();
 				if(ticket_type.equals("New"))
 				{
@@ -469,8 +460,7 @@ public class RIFDRestController {
 			return Error.toString();
 		}
 	}
-
-	@GetMapping(path = "/update_ticket", produces = "application/json")
+/*	@GetMapping(path = "/update_ticket", produces = "application/json")
 	public String update_ticket(@RequestHeader("ticket-id") String ticketid) throws ParseException
 	{
 		JSONObject status = new JSONObject();
@@ -487,13 +477,13 @@ public class RIFDRestController {
 		return status.toString();
 	}
 	
-	
+*/	
 	@GetMapping(path = "/ticket_status", produces = "application/json")
-	public String reject_ticket(@RequestHeader("ticket-id") String ticketid,@RequestHeader("status") String status_msg) throws ParseException
+	public String reject_ticket(@RequestHeader("ticket-id") String ticketid,@RequestHeader("status") String status_msg,@RequestHeader("Executive-Id") String ExecutiveId) throws ParseException
 	{
 		JSONObject status = new JSONObject();
 
-		if(rfidDAO.update_ticket(ticketid,status_msg)==true)
+		if(rfidDAO.update_ticket(ticketid,status_msg,ExecutiveId)==true)
 		{
 			status.put("status", "Ticket status updated");
 		}
@@ -504,7 +494,24 @@ public class RIFDRestController {
 
 		return status.toString();
 	}
+	
+	@GetMapping(path = "/ticket_comments", produces = "application/json")
+	public String ticket_comments(@RequestHeader("ticket-id") String ticketid,@RequestHeader("comments") String comments,@RequestHeader("Executive-Id") String ExecutiveId) throws ParseException
+	{
+		JSONObject status = new JSONObject();
 
+		if(rfidDAO.update_ticket_comments(ticketid,comments,ExecutiveId)==true)
+		{
+			status.put("status", "Ticket comments updated");
+		}
+		else
+		{
+			status.put("status", "Sorry Contact your Admin");
+		}
+		return status.toString();
+	}	
+	
+	
 	/*	@PostMapping(path = "/update_ticket", consumes = "application/json", produces = "application/json")
 	public String update_ticket(@RequestBody JSONArray data,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid) throws ParseException
 	{
