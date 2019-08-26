@@ -499,6 +499,23 @@ public class RIFDRestController {
 
 		return status.toString();
 	}
+	
+	@GetMapping(path = "/ticket_comments", produces = "application/json")
+	public String ticket_comments(@RequestHeader("ticket-id") String ticketid,@RequestHeader("status") String status_msg,@RequestHeader("Executive-Id") String Executive_Id) throws ParseException
+	{
+		JSONObject status = new JSONObject();
+
+		if(rfidDAO.update_comment(ticketid,status_msg,Executive_Id)==true)
+		{
+			status.put("status", "Ticket Comments updated");
+		}
+		else
+		{
+			status.put("status", "Sorry Contact your Admin");
+		}
+
+		return status.toString();
+	}
 
 	/*	@PostMapping(path = "/update_ticket", consumes = "application/json", produces = "application/json")
 	public String update_ticket(@RequestBody JSONArray data,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid) throws ParseException
