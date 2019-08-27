@@ -109,7 +109,7 @@ public class RIFDRestController {
 	}
 
 	@GetMapping(path="/getInventory",produces = "application/json")
-	public String getInventory(@RequestHeader("customer-id") String customerid,@RequestHeader("region") String region,@RequestHeader("city") String city,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid)
+	public String getInventory(@RequestHeader("customer-id") String customerid,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid)
 	{
 		if(rfidDAO.Authentication(companyid, secretkey)==true)
 		{
@@ -123,7 +123,7 @@ public class RIFDRestController {
 
 
 	@GetMapping(path="/getDesign",produces = "application/json")
-	public String getDesign(@RequestHeader("customer-id") String customerid,@RequestHeader("region") String region,@RequestHeader("city") String city,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid)
+	public String getDesign(@RequestHeader("customer-id") String customerid,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid)
 	{
 		if(rfidDAO.Authentication(companyid, secretkey)==true)
 		{
@@ -136,7 +136,7 @@ public class RIFDRestController {
 	}
 
 	@GetMapping(path="/getCustomer",produces = "application/json")
-	public String getCustomer(@RequestHeader("customer-id") String customerid,@RequestHeader("region") String region,@RequestHeader("city") String city,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid)
+	public String getCustomer(@RequestHeader("customer-id") String customerid,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid)
 	{
 		if(rfidDAO.Authentication(companyid, secretkey)==true)
 		{
