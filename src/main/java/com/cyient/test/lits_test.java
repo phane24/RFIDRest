@@ -2,6 +2,9 @@ package com.cyient.test;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 public class lits_test {
 
 	public static void main(String[] args) {
@@ -13,8 +16,11 @@ public class lits_test {
             } 
         }; 
         
+        JSONArray arraya = new JSONArray();
+        JSONObject obj = new JSONObject();
+        obj.put("001", arraya);
         
-        System.out.println(gfg);
+        System.out.println(obj);
 
 	}
 

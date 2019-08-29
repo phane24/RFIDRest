@@ -8,6 +8,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.SessionFactory;
@@ -15,9 +18,13 @@ import org.hibernate.criterion.Restrictions;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cyient.model.Customer;
@@ -41,6 +48,9 @@ public class RFIDDAOImpl implements RFIDDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 
+	@Autowired
+	private JavaMailSender mailSender;
+	
 	Gson gson = new Gson();
 
 
@@ -240,6 +250,21 @@ public class RFIDDAOImpl implements RFIDDAO {
 		//List<Headers_keys>dummy = criteria.list();
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Customer>getTickets_based_on_Executive_CustomerID(String Executive_id)
+	{
+
+
+		return sessionFactory.getCurrentSession().createQuery("select customer from ExecutiveTicketInfo where status='InProgress' and Executive_Id='"+Executive_id+"'").list();	
+
+
+
+		//List<Headers_keys>dummy = criteria.list();
+	}
+	
+
+	
+	@SuppressWarnings("unchecked")
 	public List<Inventory> getInventory(String customer_id)
 	{
 		Criteria c = sessionFactory.getCurrentSession().createCriteria(Inventory.class);
@@ -544,4 +569,32 @@ public class RFIDDAOImpl implements RFIDDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public List<User> get_mail(String region)
+	{
+		Criteria c = sessionFactory.getCurrentSession().createCriteria(User.class);
+		c.add(Restrictions.eq("type","Admin"));
+		c.add(Restrictions.eq("region",region));
+		List<User> obj =  c.list();
+		return obj;
+		
+	}
+	
+	public String sendEmail(final String mailid,final String ticketid) throws MessagingException {
+	     
+      mailSender.send(new MimeMessagePreparator() {
+    	  public void prepare(MimeMessage mimeMessage) throws MessagingException {
+    		  
+
+    	    MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+    	    message.setTo(mailid);
+    	    message.setSubject("Ticket Information");	    	 
+    	    message.setText("Dear <b>" + "Admin" +"</b> ,<br><br> Ticket with Id <b>" +ticketid+" </b> is Raised. <br><br> Please <a href='http://ctoceu.cyient.com:3290/RFIDAssetTracking/'>login</a> for other details", true);
+    	    
+    	  }
+    	});
+		
+		return "Mail Sent";
+	}
+	
 }

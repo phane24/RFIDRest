@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
 
 import org.jboss.logging.Logger;
@@ -11,6 +13,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.method.annotation.ExceptionHandlerMethodResolver;
 import org.springframework.web.multipart.MultipartFile;
 import org.json.JSONObject;
 
@@ -26,6 +31,7 @@ import com.cyient.dao.RFIDDAO;
 import com.cyient.exceptions.CustomException;
 import com.cyient.model.Customer;
 import com.cyient.model.Design;
+import com.cyient.model.Executive;
 import com.cyient.model.ExecutiveTicketInfo;
 import com.cyient.model.ImageWarpper;
 import com.cyient.model.Inventory;
@@ -108,6 +114,40 @@ public class RIFDRestController {
 		}
 	}
 
+	
+	
+	@GetMapping(path="/getTickets_Executive_data",produces = "application/json")
+	public String getTickets_based_on_Executive_header_data(@RequestHeader("Executive-Id") String Executive_Id) throws ParseException
+	{
+			
+			JSONObject tickets_object = new JSONObject();
+			JSONArray final_array = new JSONArray(); 
+			List<ExecutiveTicketInfo> tickets= rfidDAO.getTickets_based_on_Executive(Executive_Id);
+			for(int i=0;i<tickets.size();i++)
+			{
+				JSONArray ticketsarray = new JSONArray();
+				ticketsarray.add(tickets.get(i));
+				ticketsarray.add(rfidDAO.getCustomer(tickets.get(i).getCustomer().getCustomerId()).get(0));
+				ticketsarray.add(rfidDAO.getDesign(tickets.get(i).getCustomer().getCustomerId()).get(0));
+				ticketsarray.add(rfidDAO.getInventory(tickets.get(i).getCustomer().getCustomerId()).get(0));
+				tickets_object.put(tickets.get(i).getTicketNum(), ticketsarray);
+			}
+			final_array.add(tickets_object);
+			return final_array.toString();
+		
+	}	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@GetMapping(path="/getInventory",produces = "application/json")
 	public String getInventory(@RequestHeader("customer-id") String customerid,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid)
 	{
@@ -357,12 +397,7 @@ public class RIFDRestController {
 				//System.out.println(rfidDAO.update_inventory(inventory,customerid));
 				//status.put("status","Data updated successfully");
 				*/
-				
-				
-				
-				
-				
-				
+
 				
 				Taginformation Tag_data = new Taginformation();
 				if(ticket_type.equals("New"))
@@ -584,6 +619,21 @@ public class RIFDRestController {
 		return temp.toString();
 	}
 
+	@GetMapping("/recieve_ticket/{ticketid}/{region}/{timestamp}")
+	public String recieve_ticket(@PathVariable("ticketid") String ticketid,@PathVariable("region") String region,@PathVariable("timestamp") long timestamp) 
+	{	
+		
+		try {
+			return rfidDAO.sendEmail(rfidDAO.get_mail(region).get(0).getEmailId(),ticketid);
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "Failed";
+		}
+	}
+	
+
+	
 	/*@PostMapping(path="/update_data",consumes = "application/json")
 	public String update_data(@Valid @RequestBody List <sensor_data> stuffs) {
 		//Rest_Response response = new Rest_Response();		

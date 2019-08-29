@@ -38,5 +38,24 @@ public class test {
        // System.out.println("MM/dd/yyyy formatted date : " + new SimpleDateFormat("MM/dd/yyyy").format(date));
         System.out.println("yyyy-MM-dd formatted date : " + new SimpleDateFormat("yyyy-MM-dd").format(date));
  
+        
+        JSONArray arraya = new JSONArray();
+        JSONObject object = new JSONObject();
+        JSONObject object1 = new JSONObject();
+        JSONObject object2 = new JSONObject();
+        object2.putOnce("kiran", "kiran");
+        //object.append("kiran", "kiran");
+        //object1.append("kiran", "kiran");
+       // object2.append("kiran", "kiran");
+
+        arraya.put(object);
+        
+        arraya.put(object1);
+        arraya.put(object2);
+        
+        System.out.println(arraya);
+        
+        
+        
     }
 }

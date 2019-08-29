@@ -3,6 +3,7 @@ package com.cyient.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.mail.MessagingException;
 import javax.transaction.Transactional;
 
 import org.json.JSONArray;
@@ -81,7 +82,10 @@ public interface RFIDDAO {
 
 	@Transactional
 	public List<ExecutiveTicketInfo>getTickets_based_on_Executive(String Executive_id);
-	
+
+	@Transactional
+	public List<Customer> getTickets_based_on_Executive_CustomerID(String Executive_id);
+
 	@Transactional	
 	public List<Inventory> getInventory(String customer_id);
 
@@ -125,5 +129,11 @@ public interface RFIDDAO {
 
 	@Transactional
 	public List<Taginformation> get_taginformation(String customerid);
+
+	@Transactional
+	public List<User> get_mail(String region);
+
+	@Transactional
+	public String sendEmail(String emailId, String ticketid) throws MessagingException;
 	
 }
