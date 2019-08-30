@@ -71,6 +71,7 @@ public class ExecutiveTicketInfo implements Serializable {
 	private String comments;
 
 	
+	
 	public String getCity() {
 		return city;
 	}

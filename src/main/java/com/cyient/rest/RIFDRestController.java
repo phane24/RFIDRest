@@ -288,7 +288,7 @@ public class RIFDRestController {
 
 
 	@PostMapping(path = "/update_customer", consumes = "application/json", produces = "application/json")
-	public String update_customer(@RequestBody Customer customer,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid,@RequestHeader("region") String region,@RequestHeader("city") String city) throws ParseException
+	public String update_customer(@RequestBody Customer customer,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid) throws ParseException
 	{
 		JSONObject status = new JSONObject();
 		//code
@@ -443,18 +443,8 @@ public class RIFDRestController {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	@PostMapping(path = "/update_design", consumes = "application/json", produces = "application/json")
-	public String update_design(@RequestBody Design design,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid,@RequestHeader("customer-id") String customerid,@RequestHeader("region") String region,@RequestHeader("city") String city) throws ParseException
+	public String update_design(@RequestBody Design design,@RequestHeader("secret-key") String secretkey,@RequestHeader("company-id") String companyid,@RequestHeader("customer-id") String customerid) throws ParseException
 	{
 		JSONObject status = new JSONObject();
 		//code
@@ -487,7 +477,7 @@ public class RIFDRestController {
 
 
 	@PostMapping(path = "/update_inventory", consumes = "application/json", produces = "application/json")
-	public String update_inventory(@RequestBody Inventory inventory,@RequestHeader("secret-key") String secretkey,@RequestHeader("customer-id") String customerid,@RequestHeader("company-id") String companyid,@RequestHeader("region") String region,@RequestHeader("city") String city) throws ParseException
+	public String update_inventory(@RequestBody Inventory inventory,@RequestHeader("secret-key") String secretkey,@RequestHeader("customer-id") String customerid,@RequestHeader("company-id") String companyid) throws ParseException
 	{
 		JSONObject status = new JSONObject();
 		//code
