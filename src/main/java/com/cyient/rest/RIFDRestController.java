@@ -132,8 +132,8 @@ public class RIFDRestController {
 				ticketsarray.add(rfidDAO.getInventory(tickets.get(i).getCustomer().getCustomerId()).get(0));
 				tickets_object.put(tickets.get(i).getTicketNum(), ticketsarray);
 			}
-			final_array.add(tickets_object);
-			return final_array.toString();
+			//final_array.add(tickets_object);
+			return tickets_object.toString();
 		
 	}	
 	
