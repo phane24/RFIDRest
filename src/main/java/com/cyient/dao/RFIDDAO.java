@@ -136,4 +136,7 @@ public interface RFIDDAO {
 	@Transactional
 	public String sendEmail(String emailId, String ticketid) throws MessagingException;
 	
+	@Transactional
+	public User getUsername(String username);
+	
 }

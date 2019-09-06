@@ -206,7 +206,21 @@ public class RIFDRestController {
 			}
 			else
 			{
-				return Success.toString();
+				//return Success.toString();
+				JSONObject tickets_object = new JSONObject();
+				JSONArray final_array = new JSONArray(); 
+				List<ExecutiveTicketInfo> tickets= rfidDAO.getTickets_based_on_Executive(username);
+				for(int i=0;i<tickets.size();i++)
+				{
+					JSONArray ticketsarray = new JSONArray();
+					ticketsarray.add(tickets.get(i));
+					ticketsarray.add(rfidDAO.getCustomer(tickets.get(i).getCustomer().getCustomerId()).get(0));
+					ticketsarray.add(rfidDAO.getDesign(tickets.get(i).getCustomer().getCustomerId()).get(0));
+					ticketsarray.add(rfidDAO.getInventory(tickets.get(i).getCustomer().getCustomerId()).get(0));
+					tickets_object.put(tickets.get(i).getTicketNum(), ticketsarray);
+				}
+				final_array.add(tickets_object);
+				return final_array.toString();			
 			}
 		}
 		else

@@ -65,7 +65,11 @@ public class RFIDDAOImpl implements RFIDDAO {
 		return (User)c.uniqueResult();
 	} 
 
-
+	public User getUsername(String username) {
+		Criteria c = sessionFactory.getCurrentSession().createCriteria(User.class);
+		c.add(Restrictions.eq("username",username));
+		return (User)c.list().get(0);
+	} 
 
 
 
