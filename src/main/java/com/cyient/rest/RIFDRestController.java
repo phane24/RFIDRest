@@ -42,6 +42,7 @@ import com.cyient.model.sensor_data;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import com.mchange.v2.c3p0.stmt.GooGooStatementCache;
 import com.mysql.jdbc.Blob;
 
 @RestController
@@ -144,10 +145,20 @@ public class RIFDRestController {
 	public String getCustomerIds_Executive(@RequestHeader("Executive-Id") String Executive_Id) throws ParseException
 	{
 			
-			JSONObject tickets_object = new JSONObject();
-			List<ExecutiveTicketInfo> tickets= rfidDAO.getTickets_based_on_Executive(Executive_Id);
-			tickets_object.put("customerID", tickets.get(0).getCustomer().getCustomerId());
-			return tickets_object.toString();		
+		JSONObject tickets_object = new JSONObject();
+		JSONArray final_array = new JSONArray(); 
+		String customerid=rfidDAO.getTickets_based_on_Executive(Executive_Id).get(0).getCustomer().getCustomerId();
+
+			JSONArray finalObject = new JSONArray();
+			List<Object> modelData = new ArrayList<Object>();
+
+
+			modelData.add(rfidDAO.getCustomer(customerid).get(0));
+			modelData.add(rfidDAO.getDesign(customerid).get(0));
+			modelData.add(rfidDAO.getInventory(customerid).get(0));
+
+					return gson.toJson(modelData);	
+				
 	}	
 	
 	
