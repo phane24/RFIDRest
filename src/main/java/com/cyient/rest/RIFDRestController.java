@@ -131,15 +131,24 @@ public class RIFDRestController {
 				ticketsarray.add(rfidDAO.getDesign(tickets.get(i).getCustomer().getCustomerId()).get(0));
 				ticketsarray.add(rfidDAO.getInventory(tickets.get(i).getCustomer().getCustomerId()).get(0));
 				tickets_object.put(tickets.get(i).getTicketNum(), ticketsarray);
+				//objarray.add(ticketsarray);
+
 			}
-			//final_array.add(tickets_object);
-			return tickets_object.toString();
-		
+			final_array.add(tickets_object);
+			return final_array.toString();		
 	}	
 	
 	
 	
-	
+	@GetMapping(path="/getCustomerIds_Executive",produces = "application/json")
+	public String getCustomerIds_Executive(@RequestHeader("Executive-Id") String Executive_Id) throws ParseException
+	{
+			
+			JSONObject tickets_object = new JSONObject();
+			List<ExecutiveTicketInfo> tickets= rfidDAO.getTickets_based_on_Executive(Executive_Id);
+			tickets_object.put("customerID", tickets.get(0).getCustomer().getCustomerId());
+			return tickets_object.toString();		
+	}	
 	
 	
 	
